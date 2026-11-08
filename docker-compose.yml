@@ -1,0 +1,47 @@
+name: apartment-price-system
+
+services:
+  storage:
+    build: ./services/storage
+    volumes:
+      - storage_data:/app/data
+    ports:
+      - "8002:8002"
+
+  collector:
+    build: ./services/collector
+    volumes:
+      - ./data:/data:ro
+      - ./logs:/app/logs
+    depends_on:
+      - storage
+    ports:
+      - "8001:8001"
+
+  ml_service:
+    build: ./services/ml_service
+    volumes:
+      - ml_models:/app/models
+    depends_on:
+      - storage
+    ports:
+      - "8003:8003"
+
+  web_master:
+    build: ./services/web_master
+    depends_on:
+      - collector
+      - ml_service
+    ports:
+      - "8000:8000"
+
+  visualization:
+    build: ./services/visualization
+    depends_on:
+      - web_master
+    ports:
+      - "8050:8050"
+
+volumes:
+  storage_data:
+  ml_models:

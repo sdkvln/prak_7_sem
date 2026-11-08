@@ -1,0 +1,11 @@
+host: 0.0.0.0
+port: 8001
+
+storage_url: http://storage:8002
+
+# CSV-файл, из которого Collector отдаёт данные батчами
+dataset_path: /data/raw/russia_real_estate_sample.csv
+default_batch_size: 1000
+
+# журнал загрузок
+log_file: /app/logs/collector.log

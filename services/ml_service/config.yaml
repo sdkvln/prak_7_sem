@@ -1,0 +1,21 @@
+host: 0.0.0.0
+port: 8003
+
+storage_url: http://storage:8002
+models_dir: /app/models
+
+features: [region, building_type, level, levels, rooms, area, kitchen_area, object_type]
+target: price
+test_size: 0.2
+
+# простая очистка выбросов перед обучением
+filters:
+  price: [300000, 300000000]
+  area: [10, 500]
+
+# доступные алгоритмы и их параметры по умолчанию
+model_types:
+  linear: {}
+  random_forest:
+    n_estimators: 100
+    max_depth: 16

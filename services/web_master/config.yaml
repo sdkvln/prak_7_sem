@@ -1,0 +1,8 @@
+host: 0.0.0.0
+port: 8000
+timeout_sec: 300
+
+services:
+  collector: http://collector:8001
+  storage: http://storage:8002
+  ml_service: http://ml_service:8003

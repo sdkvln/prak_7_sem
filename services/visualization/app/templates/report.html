@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Отчёт по модели {{ m.name }}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 30px auto; padding: 0 16px; }
+    table { border-collapse: collapse; margin-bottom: 20px; }
+    td, th { border: 1px solid #ccc; padding: 4px 10px; text-align: left; }
+    .bar { background: #4a7bd0; height: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Отчёт по модели «{{ m.name }}»</h1>
+  <p>Алгоритм: {{ m.model_type }}.
+     Обучающая выборка: {{ m.rows_train }} строк, тестовая: {{ m.rows_test }}.</p>
+
+  <h2>Качество на тестовой выборке</h2>
+  <table>
+    <tr><td>MAE (средняя ошибка, ₽)</td><td>{{ "{:,}".format(m.metrics.mae).replace(",", " ") }}</td></tr>
+    <tr><td>MAPE (средняя ошибка, %)</td><td>{{ "%.1f"|format(m.metrics.mape * 100) }}%</td></tr>
+    <tr><td>R² (по логарифму цены)</td><td>{{ m.metrics.r2 }}</td></tr>
+  </table>
+
+  <h2>Значимость признаков</h2>
+  <table>
+    {% for name, value in m.feature_importance.items() %}
+    <tr><td>{{ name }}</td><td>{{ "%.3f"|format(value) }}</td>
+        <td style="width:300px"><div class="bar" style="width: {{ value * 100 }}%"></div></td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

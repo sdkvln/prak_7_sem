@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Оценка стоимости квартир</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 20px auto; padding: 0 16px; }
+    section { border: 1px solid #ccc; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; }
+    h2 { margin-top: 0; font-size: 18px; }
+    label { display: inline-block; margin: 4px 12px 4px 0; }
+    input, select { width: 110px; }
+    button { margin-top: 8px; padding: 6px 14px; }
+    pre { background: #f4f4f4; padding: 8px; white-space: pre-wrap; }
+    .error { color: #b00; }
+  </style>
+</head>
+<body>
+  <h1>Оценка стоимости квартир</h1>
+  <p>Состояние сервисов: <span id="status">…</span></p>
+
+  <section>
+    <h2>1. Сбор данных</h2>
+    <label>Размер батча <input id="c_size" type="number" value="10000"></label>
+    <label>Число батчей <input id="c_batches" type="number" value="5"></label>
+    <br><button onclick="collect()">Загрузить</button>
+    <button onclick="clearData()">Очистить хранилище</button>
+    <pre id="collect_out"></pre>
+  </section>
+
+  <section>
+    <h2>2. Обучение модели</h2>
+    <label>Имя модели <input id="t_name" value="rf_main"></label>
+    <label>Алгоритм <select id="t_type"></select></label>
+    <br><button onclick="train()">Обучить</button>
+    <pre id="train_out"></pre>
+  </section>
+
+  <section>
+    <h2>3. Оценка квартиры</h2>
+    <label>Модель <select class="models" id="p_model"></select></label><br>
+    <label>Регион <select id="region">
+      <option value="3">Москва</option>
+      <option value="81">Московская обл.</option>
+      <option value="2661">Санкт-Петербург</option>
+      <option value="3446">Ленинградская обл.</option>
+      <option value="9654">Новосибирская обл.</option>
+      <option value="2843">Краснодарский край</option>
+      <option value="6171">Свердловская обл.</option>
+      <option value="2922">Татарстан</option>
+    </select></label>
+    <label>Площадь, м² <input id="area" type="number" value="54"></label>
+    <label>Комнат <input id="rooms" type="number" value="2"></label>
+    <label>Кухня, м² <input id="kitchen_area" type="number" value="9"></label>
+    <label>Этаж <input id="level" type="number" value="7"></label>
+    <label>Этажей в доме <input id="levels" type="number" value="17"></label>
+    <label>Тип дома <select id="building_type">
+      <option value="2">панельный</option><option value="3">монолитный</option>
+      <option value="4">кирпичный</option><option value="5">блочный</option>
+      <option value="1">другой</option>
+    </select></label>
+    <label>Рынок <select id="object_type">
+      <option value="1">вторичка</option><option value="11">новостройка</option>
+    </select></label>
+    <br><button onclick="predict()">Оценить</button>
+    <pre id="predict_out"></pre>
+  </section>
+
+  <section>
+    <h2>4. Отчёт по модели</h2>
+    <label>Модель <select class="models" id="r_model"></select></label>
+    <br><button onclick="showReport()">Показать</button>
+    <button onclick="location.href = '/report/' + val('r_model')">Скачать HTML</button>
+    <pre id="report_out"></pre>
+  </section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

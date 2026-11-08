@@ -1,0 +1,11 @@
+# Зависимости всех сервисов (каждый сервис ставит свои в Docker-образе, см. services/*/requirements.txt).
+# scripts/demo.py использует только стандартную библиотеку.
+fastapi==0.115.6
+flask==3.1.0
+httpx==0.28.1
+joblib==1.4.2
+numpy==2.1.3
+pandas==2.2.3
+pyyaml==6.0.2
+scikit-learn==1.5.2
+uvicorn==0.32.1
